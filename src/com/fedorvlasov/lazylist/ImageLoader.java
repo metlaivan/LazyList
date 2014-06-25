@@ -27,13 +27,13 @@ public class ImageLoader {
     private Map<ImageView, String> imageViews=Collections.synchronizedMap(new WeakHashMap<ImageView, String>());
     ExecutorService executorService;
     Handler handler=new Handler();//handler to display images in UI thread
-    
+    private int stub_id=R.drawable.stub;
     public ImageLoader(Context context){
         fileCache=new FileCache(context);
         executorService=Executors.newFixedThreadPool(5);
     }
     
-    final int stub_id=R.drawable.stub;
+    
     public void DisplayImage(String url, ImageView imageView)
     {
         imageViews.put(imageView, url);
@@ -64,7 +64,7 @@ public class ImageLoader {
         
         //from web
         try {
-            Bitmap bitmap=null;
+        	Bitmap bitmap=null;
             URL imageUrl = new URL(url);
             HttpURLConnection conn = (HttpURLConnection)imageUrl.openConnection();
             conn.setConnectTimeout(30000);
@@ -184,5 +184,21 @@ public class ImageLoader {
         memoryCache.clear();
         fileCache.clear();
     }
+
+
+	/**
+	 * @return the stub_id
+	 */
+	public int getStub_id() {
+		return stub_id;
+	}
+
+
+	/**
+	 * @param stub_id the stub_id to set
+	 */
+	public void setStub_id(int stub_id) {
+		this.stub_id = stub_id;
+	}
 
 }
